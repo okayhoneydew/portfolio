@@ -1,40 +1,1298 @@
 <!doctype html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Shaun Pozywio — creative, client, technical, and project work." />
-  <title>Shaun Pozywio</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Shaun Pozywio — selected work across music, creative projects, client systems, and technical problem solving.">
+<title>Shaun Pozywio</title>
+<style>
+:root{
+  --paper:#f2f0e9;
+  --ink:#11110f;
+  --soft:#59564f;
+  --muted:#858078;
+  --line:#cbc7bd;
+  --accent:#a34731;
+  --max:1320px;
+  --header-h:58px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:Arial,Helvetica,sans-serif;
+  line-height:1.45;
+  text-rendering:optimizeLegibility;
+}
+
+/* Barely-there paper grain: texture, not an effect. */
+body::before{
+  content:"";position:fixed;inset:0;z-index:999;pointer-events:none;
+  opacity:.018;mix-blend-mode:multiply;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180' viewBox='0 0 180 180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.78' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.42'/%3E%3C/svg%3E");
+}
+a{color:inherit;text-decoration:none}
+img{display:block;width:100%}
+button{font:inherit;color:inherit}
+.shell{width:min(var(--max),calc(100% - 48px));margin:auto}
+
+header{
+  height:var(--header-h);position:sticky;top:0;z-index:50;
+  display:flex;align-items:center;
+  border-bottom:1px solid rgba(17,17,15,.14);
+  background:rgba(242,240,233,.91);
+  backdrop-filter:blur(13px);
+}
+.nav{display:flex;align-items:center;justify-content:space-between}
+.wordmark{
+  font-size:11px;font-weight:700;letter-spacing:.16em;text-transform:uppercase
+}
+.navlinks{display:flex;gap:26px;font-size:11px}
+.navlinks a{color:var(--soft);transition:color .2s ease}
+.navlinks a:hover{color:var(--accent)}
+
+.hero{
+  min-height:clamp(430px,62vh,660px);
+  padding:48px 0 36px;
+  display:grid;
+  grid-template-columns:54px minmax(0,1fr) minmax(230px,.32fr);
+  grid-template-rows:1fr auto;
+  column-gap:26px;
+  align-items:start;
+}
+.hero-index{
+  grid-column:1;
+  grid-row:1;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;letter-spacing:.12em;color:var(--muted);
+  writing-mode:vertical-rl;transform:rotate(180deg);
+  text-transform:uppercase;padding-top:4px
+}
+.hero-main{
+  grid-column:2;
+  grid-row:1;
+  align-self:center;
+  max-width:1040px
+}
+
+.mobile-hero-meta{display:none}
+.hero h1{
+  margin:0;
+  font-size:clamp(52px,7vw,102px);
+  line-height:.89;
+  letter-spacing:-.064em;
+  font-weight:600;
+  max-width:1080px;
+}
+.hero h1 .line{display:block}
+.hero h1 .quiet{color:#44413c;font-weight:500}
+.hero p{
+  margin:27px 0 0;
+  max-width:630px;
+  font-size:14px;line-height:1.5;color:var(--soft)
+}
+.hero-side{
+  grid-column:3;
+  grid-row:1;
+  align-self:end;
+  border-left:1px solid var(--line);
+  padding:0 0 2px 17px;
+  color:var(--muted);
+  font-size:10px;line-height:1.55;
+  text-transform:uppercase;letter-spacing:.055em
+}
+.hero-side strong{
+  display:block;color:var(--ink);font-size:10px;
+  margin-bottom:7px;letter-spacing:.08em
+}
+.hero-links{
+  grid-column:2;
+  grid-row:2;
+  display:flex;gap:22px;
+  margin-top:25px;
+  font-family:"Courier New",Courier,monospace;
+  font-size:10px;letter-spacing:.04em
+}
+.text-link{
+  display:inline-flex;gap:7px;align-items:center;
+  border-bottom:1px solid var(--ink);padding-bottom:3px
+}
+.text-link:hover{color:var(--accent);border-color:var(--accent)}
+
+.work-band{
+  border-top:1px solid var(--ink);
+  background:transparent;
+}
+.work-intro{
+  min-height:58px;
+  display:grid;
+  grid-template-columns:54px minmax(0,1fr) auto;
+  gap:26px;
+  align-items:center;
+}
+.work-kicker{
+  grid-column:2;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--soft)
+}
+.work-range{
+  grid-column:3;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;letter-spacing:.12em;color:var(--muted)
+}
+
+.accordion-work{
+  padding:0 0 88px;
+  border-top:1px solid var(--line);
+}
+.project-accordion{border-bottom:1px solid var(--line)}
+.accordion-trigger{
+  width:100%;border:0;background:transparent;cursor:pointer;text-align:left;
+  display:grid;
+  grid-template-columns:54px minmax(0,1fr) 160px 76px;
+  gap:26px;align-items:center;
+  min-height:92px;padding:0;
+  transition:
+    min-height .5s cubic-bezier(.22,1,.36,1),
+    background .2s ease;
+}
+.accordion-trigger{
+  position:relative;
+}
+.accordion-trigger::after{
+  content:"";
+  position:absolute;left:0;bottom:-1px;
+  width:0;height:2px;background:var(--accent);
+  transition:width .42s cubic-bezier(.22,1,.36,1);
+}
+.accordion-trigger:hover{background:rgba(17,17,15,.03)}
+.accordion-trigger:hover::after,
+.accordion-trigger:focus-visible::after{width:100%}
+.accordion-trigger:focus-visible{outline:1px solid var(--accent);outline-offset:-1px}
+.project-accordion.is-open .accordion-trigger{min-height:72px}
+
+.acc-num{
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;color:var(--muted);
+  align-self:center
+}
+.acc-title-wrap{display:block;min-width:0}
+.acc-title{
+  display:block;
+  font-size:clamp(25px,2.55vw,39px);
+  line-height:1;letter-spacing:-.045em;font-weight:520;
+  transition:
+    font-size .5s cubic-bezier(.22,1,.36,1),
+    transform .28s cubic-bezier(.22,1,.36,1);
+}
+.accordion-trigger:hover .acc-title{transform:translateX(5px)}
+.project-accordion.is-open .acc-title{
+  color:var(--ink);
+  font-size:clamp(20px,1.85vw,29px);
+  transform:none;
+  white-space:nowrap;
+}
+.acc-descriptor{
+  display:flex;align-items:center;gap:9px;margin-top:7px;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;line-height:1.25;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--muted)
+}
+.acc-action{
+  display:inline-flex;align-items:center;gap:5px;
+  color:#5d5952;
+}
+.acc-action::before{
+  content:"↳";
+  color:var(--accent);
+  font-size:10px;
+  transform:translateY(-1px);
+}
+.project-accordion.is-open .acc-action{color:var(--accent)}
+.project-accordion.is-open .acc-action::before{content:"↰"}
+.project-accordion.is-open .acc-descriptor{color:#77736c}
+
+.acc-meta{
+  justify-self:start;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted)
+}
+.acc-meta .count{color:var(--soft)}
+
+
+.acc-icon-wrap{
+  grid-column:4;
+  justify-self:end;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:5px;
+  min-width:76px;
+}
+.acc-icon-wrap .acc-icon{
+  grid-column:auto;
+  justify-self:auto;
+}
+.disclosure-label{
+  display:block;
+  font-family:"Courier New",Courier,monospace;
+  font-size:7px;
+  line-height:1;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#6d6962;
+  white-space:nowrap;
+  transition:color .25s ease, transform .35s cubic-bezier(.22,1,.36,1);
+}
+.disclosure-label .state-close{display:none}
+.project-accordion.is-open .disclosure-label{color:var(--accent)}
+.project-accordion.is-open .disclosure-label .state-open{display:none}
+.project-accordion.is-open .disclosure-label .state-close{display:inline}
+
+.acc-icon{
+  grid-column:4;
+  justify-self:end;
+  width:27px;height:27px;
+  display:inline-flex;align-items:center;justify-content:center;
+  color:var(--muted);transform:rotate(-20deg);
+  transition:
+    transform .68s cubic-bezier(.22,1,.36,1),
+    color .26s ease;
+}
+.acc-icon svg{width:24px;height:24px;overflow:visible}
+.acc-icon path{
+  fill:none;stroke:currentColor;stroke-width:1.4;
+  stroke-linecap:round;stroke-linejoin:round
+}
+.accordion-trigger:hover .acc-icon{color:var(--accent);transform:rotate(12deg)}
+.project-accordion.is-open .acc-icon{
+  transform:rotate(125deg);color:var(--accent)
+}
+
+/* Reliable accordion reveal: intentionally no height animation.
+   The interaction should never compete with the work itself. */
+.acc-panel{display:none}
+.project-accordion.is-open .acc-panel{display:block}
+.acc-panel-clip{min-height:0;overflow:hidden}
+.acc-body{
+  display:grid;
+  grid-template-columns:54px minmax(0,1.08fr) minmax(330px,.72fr) 44px;
+  gap:26px;
+  padding:8px 0 50px;
+}
+.acc-media{
+  grid-column:2;
+  border-top:1px solid var(--ink);
+  background:#ddd;
+  overflow:hidden;align-self:start;position:relative;
+  cursor:zoom-in;
+}
+.acc-media img{
+  width:100%;height:auto;object-fit:cover;
+  filter:saturate(.68) contrast(.98);
+  transition:
+    filter .35s ease,
+    transform .65s cubic-bezier(.16,1,.3,1)
+}
+.acc-media:hover img{filter:saturate(.92);transform:scale(1.012)}
+.inspect{
+  position:absolute;right:9px;bottom:9px;
+  background:var(--paper);
+  border:1px solid rgba(17,17,15,.16);
+  font-family:"Courier New",Courier,monospace;
+  font-size:8px;letter-spacing:.09em;text-transform:uppercase;
+  padding:6px 8px;color:var(--soft);pointer-events:none
+}
+.acc-copy{
+  grid-column:3;
+  padding:4px 0 0;
+  align-self:start
+}
+.overline{
+  font-family:"Courier New",Courier,monospace;
+  font-size:8px;letter-spacing:.13em;text-transform:uppercase;
+  color:var(--accent);margin-bottom:17px
+}
+.acc-copy h3{
+  font-size:clamp(25px,2.45vw,38px);
+  line-height:1.03;letter-spacing:-.045em;
+  font-weight:520;margin:0 0 19px
+}
+.acc-copy p{
+  font-size:13px;line-height:1.55;color:var(--soft);
+  max-width:520px;margin:0
+}
+.acc-proof{
+  display:flex;flex-wrap:wrap;gap:12px 16px;
+  margin-top:22px;cursor:default
+}
+.acc-proof span{
+  padding:0;
+  background:transparent;border-radius:0;
+  font-family:"Courier New",Courier,monospace;
+  font-size:8px;letter-spacing:.075em;text-transform:uppercase;
+  color:var(--muted);
+  user-select:none;cursor:default
+}
+.acc-proof span::before{content:"•";color:var(--accent);margin-right:6px}
+.case-link{
+  display:inline-block;margin-top:25px;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;letter-spacing:.04em;
+  border-bottom:1px solid var(--ink);padding-bottom:3px
+}
+.case-link:hover{color:var(--accent);border-color:var(--accent)}
+.music-placeholder{
+  display:flex;align-items:flex-end;
+  background:#171715;color:var(--paper);
+  padding:28px;min-height:300px;cursor:default
+}
+.music-placeholder span{
+  display:block;font-size:clamp(30px,4vw,56px);
+  line-height:.95;letter-spacing:-.055em
+}
+.music-placeholder small{
+  display:block;margin-top:10px;color:#aaa59d;
+  font-family:"Courier New",Courier,monospace;font-size:9px
+}
+
+.about{
+  border-top:1px solid var(--ink);
+  padding:72px 0 84px;
+  display:grid;
+  grid-template-columns:54px minmax(0,760px) 1fr;
+  gap:26px
+}
+.about h2{
+  grid-column:1;
+  font-family:"Courier New",Courier,monospace;
+  font-size:9px;letter-spacing:.14em;text-transform:uppercase;
+  margin:4px 0 0;color:var(--muted)
+}
+.about-copy{grid-column:2}
+.about-copy p{
+  font-size:clamp(27px,3vw,44px);
+  letter-spacing:-.045em;line-height:1.12;margin:0 0 25px;font-weight:520
+}
+.about-copy .small{
+  font-size:13px;line-height:1.55;letter-spacing:0;
+  color:var(--soft);max-width:620px;font-weight:400
+}
+.contact{
+  border-top:1px solid var(--line);
+  padding:34px 0 52px;
+  display:grid;grid-template-columns:54px minmax(0,1fr) auto;
+  gap:26px;align-items:end
+}
+.contact-title{
+  grid-column:2;
+  font-size:clamp(32px,4vw,58px);line-height:1;
+  letter-spacing:-.055em;font-weight:520
+}
+.contact-links{
+  grid-column:3;display:flex;gap:18px;
+  font-family:"Courier New",Courier,monospace;font-size:9px
+}
+.contact-links a{border-bottom:1px solid var(--ink);padding-bottom:3px}
+.contact-links a:hover{color:var(--accent);border-color:var(--accent)}
+footer{
+  padding:17px 0 23px;border-top:1px solid var(--line);
+  font-family:"Courier New",Courier,monospace;
+  font-size:8px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)
+}
+
+.lightbox{
+  position:fixed;inset:0;z-index:100;background:rgba(15,15,14,.9);
+  display:none;align-items:center;justify-content:center;padding:34px
+}
+.lightbox.open{display:flex}
+.lightbox img{
+  max-width:min(1400px,94vw);max-height:88vh;width:auto;height:auto;
+  box-shadow:0 24px 80px rgba(0,0,0,.35)
+}
+.lightbox-close{
+  position:absolute;top:18px;right:20px;width:36px;height:36px;
+  border:1px solid rgba(255,255,255,.32);border-radius:50%;
+  background:transparent;color:#fff;cursor:pointer;font-size:20px
+}
+
+@media(max-width:900px){
+  .shell{width:min(var(--max),calc(100% - 30px))}
+  .hero{
+    min-height:auto;
+    padding:31px 0 29px;
+    grid-template-columns:1fr;
+    grid-template-rows:auto;
+    gap:0
+  }
+  .hero-index,.hero-side{display:none}
+  .hero-main{grid-column:1;grid-row:auto}
+  .hero h1{
+    font-size:clamp(43px,10.8vw,76px);
+    line-height:.91;max-width:800px
+  }
+  .hero p{font-size:13px;margin-top:22px;max-width:560px}
+  .hero-links{
+    grid-column:1;grid-row:auto;
+    margin-top:20px;gap:20px
+  }
+
+  .work-intro{
+    min-height:51px;
+    grid-template-columns:1fr auto;
+    gap:15px
+  }
+  .work-kicker{grid-column:1}
+  .work-range{grid-column:2}
+
+  .accordion-trigger{
+    grid-template-columns:31px minmax(0,1fr) 34px;
+    gap:10px;min-height:82px
+  }
+  .project-accordion.is-open .accordion-trigger{min-height:64px}
+  .acc-num{grid-column:1}
+  .acc-title-wrap{grid-column:2}
+  .acc-title{font-size:clamp(22px,5.6vw,31px)}
+  .project-accordion.is-open .acc-title{font-size:20px;white-space:normal}
+  .acc-descriptor{font-size:8px;margin-top:6px;flex-wrap:wrap;gap:5px 8px}
+  .acc-action{font-size:8px}
+  .acc-meta{display:none}
+  .acc-icon{grid-column:3;width:26px;height:26px}
+  .acc-icon svg{width:23px;height:23px}
+
+  .acc-body{
+    grid-template-columns:31px minmax(0,1fr);
+    gap:10px;
+    padding:4px 0 34px
+  }
+  .acc-media{
+    grid-column:2;
+    max-height:158px
+  }
+  .acc-media img{height:158px;object-fit:cover}
+  .acc-copy{grid-column:2;padding-top:3px}
+  .acc-copy h3{font-size:23px;line-height:1.06;margin-bottom:13px}
+  .acc-copy p{font-size:12.5px;line-height:1.52}
+  .overline{margin-bottom:11px}
+  .acc-proof{margin-top:16px;gap:8px 13px}
+  .case-link{margin-top:19px}
+  .music-placeholder{min-height:158px}
+
+  .about{
+    grid-template-columns:minmax(0,1fr);
+    gap:0;padding:58px 0 68px
+  }
+  .about h2{grid-column:1;margin-bottom:12px}
+  .about-copy{grid-column:1}
+  .about-copy p{font-size:clamp(26px,6.8vw,38px)}
+
+  .contact{
+    grid-template-columns:minmax(0,1fr);
+    gap:0;padding:30px 0 42px
+  }
+  .contact-title{grid-column:1}
+  .contact-links{grid-column:1;margin-top:18px}
+}
+
+@media(max-width:520px){
+  :root{--header-h:54px}
+  .accordion-trigger{scroll-margin-top:calc(var(--header-h) + 22px)}
+  header{height:var(--header-h)}
+  .wordmark{font-size:10px}
+  .navlinks{gap:17px}
+  .navlinks a:nth-child(2){display:none}
+
+  .hero{padding:27px 0 25px}
+  .hero h1{font-size:43px;line-height:.9;letter-spacing:-.06em}
+  .hero p{font-size:12.5px;line-height:1.48;margin-top:20px;color:#5c5851}
+  .hero-links{margin-top:18px}
+
+  .work-intro{min-height:48px}
+  .accordion-trigger{min-height:78px}
+  .project-accordion.is-open .accordion-trigger{min-height:60px}
+  .acc-title{font-size:22px}
+  .project-accordion.is-open .acc-title{font-size:19px;white-space:normal}
+  .acc-descriptor{max-width:250px}
+  .acc-body{grid-template-columns:1fr;padding:2px 0 31px}
+  .acc-media,.acc-copy{grid-column:1}
+  .acc-media{max-height:148px}
+  .acc-media img{height:148px}
+  .music-placeholder{min-height:148px}
+  .acc-copy{padding-top:1px}
+  .acc-copy h3{font-size:21px}
+}
+
+
+/* V14: mobile accordion is a responsive reinterpretation of the desktop index.
+   Desktop composition above remains unchanged. */
+@media(max-width:520px){
+  .accordion-work{padding-bottom:72px}
+
+  .accordion-trigger{
+    grid-template-columns:minmax(0,1fr) 38px;
+    grid-template-rows:auto auto;
+    column-gap:14px;
+    row-gap:8px;
+    min-height:112px;
+    padding:20px 0 18px;
+    align-items:center;
+  }
+
+  .project-accordion.is-open .accordion-trigger{
+    min-height:82px;
+    padding:14px 0 13px;
+  }
+
+  /* Number becomes metadata instead of consuming a permanent left rail. */
+  .acc-num{
+    grid-column:1;
+    grid-row:1;
+    align-self:end;
+    font-size:8px;
+    margin-bottom:1px;
+    color:#8b867e;
+  }
+
+  .acc-title-wrap{
+    grid-column:1;
+    grid-row:2;
+    min-width:0;
+    padding-right:4px;
+  }
+
+  .acc-title{
+    font-size:25px;
+    line-height:.96;
+    letter-spacing:-.047em;
+    max-width:290px;
+  }
+
+  .project-accordion.is-open .acc-title{
+    font-size:22px;
+    line-height:.98;
+    white-space:normal;
+  }
+
+  .acc-descriptor{
+    display:block;
+    margin-top:11px;
+    font-size:8px;
+    line-height:1.35;
+    letter-spacing:.07em;
+    max-width:285px;
+  }
+
+  .acc-icon{
+    grid-column:2;
+    grid-row:1 / 3;
+    align-self:center;
+    justify-self:end;
+    width:31px;
+    height:31px;
+  }
+  .acc-icon svg{width:27px;height:27px}
+
+  /* Artifact count is deliberately omitted on phone to reduce index noise. */
+  .acc-meta{display:none}
+
+  /* More visual separation between rows without introducing cards. */
+  .project-accordion{
+    border-bottom-color:#bbb7ae;
+  }
+
+  .accordion-trigger::after{
+    height:1px;
+  }
+
+  /* Open content aligns with the title rather than a now-removed number rail. */
+  .acc-body{
+    grid-template-columns:1fr;
+    gap:18px;
+    padding:6px 0 40px;
+  }
+
+  .acc-media,
+  .acc-copy{
+    grid-column:1;
+  }
+
+  .acc-media{
+    max-height:166px;
+    margin-top:2px;
+  }
+
+  .acc-media img{height:166px}
+  .music-placeholder{min-height:166px}
+
+  .overline{
+    font-size:8px;
+    margin-bottom:12px;
+  }
+
+  .acc-copy h3{
+    font-size:23px;
+    line-height:1.04;
+    margin-bottom:14px;
+    max-width:330px;
+  }
+
+  .acc-copy p{
+    font-size:13px;
+    line-height:1.55;
+    max-width:340px;
+  }
+
+  .acc-proof{
+    margin-top:18px;
+    gap:9px 14px;
+  }
+
+  .case-link{
+    margin-top:21px;
+  }
+}
+
+
+/* V22: mobile editorial pass.
+   First project starts open. Use typography, spacing, state, and full-bleed media
+   to make the mobile composition feel intentional rather than like desktop compressed. */
+@media(max-width:520px){
+  /* Mobile gets its own editorial composition instead of a scaled desktop hero. */
+  .hero{
+    position:relative;
+    overflow:hidden;
+    padding:24px 0 31px;
+  }
+  .hero > *{position:relative;z-index:1}
+  .hero::after{
+    content:"26/27";
+    position:absolute;
+    right:-8px;
+    bottom:10px;
+    z-index:0;
+    font-family:"Courier New",Courier,monospace;
+    font-size:72px;
+    line-height:.8;
+    letter-spacing:-.12em;
+    color:rgba(17,17,15,.035);
+    pointer-events:none;
+    user-select:none;
+  }
+  .mobile-hero-meta{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:14px;
+    margin:0 0 24px;
+    padding-bottom:10px;
+    border-bottom:1px solid var(--line);
+    font-family:"Courier New",Courier,monospace;
+    font-size:7.5px;
+    line-height:1;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+  }
+  .mobile-hero-meta span:last-child{color:var(--accent)}
+  .hero h1{
+    font-size:44px;
+    line-height:.88;
+    letter-spacing:-.064em;
+  }
+  .hero h1 .line:nth-child(2){padding-left:19px}
+  .hero h1 .line:nth-child(3){padding-left:2px}
+  .hero h1 .line:nth-child(4){padding-left:25px}
+  .hero p{
+    margin-top:24px;
+    margin-left:18px;
+    max-width:305px;
+  }
+  .hero-links{
+    margin-top:22px;
+    margin-left:18px;
+    gap:24px;
+  }
+
+  .work-intro{min-height:54px}
+  .work-kicker,.work-range{font-size:8px}
+
+  /* Project rows are treated as an index, not mini cards. */
+  .accordion-work{padding-bottom:34px}
+  .accordion-trigger{
+    grid-template-columns:minmax(0,1fr) 72px;
+    grid-template-rows:auto auto;
+    column-gap:12px;
+    row-gap:7px;
+    min-height:0;
+    padding:24px 0 22px;
+    align-items:center;
+  }
+  .project-accordion.is-open .accordion-trigger{
+    min-height:0;
+    padding:19px 0 17px;
+  }
+  .acc-num{
+    grid-column:1;
+    grid-row:1;
+    align-self:end;
+    margin:0 0 2px;
+    font-size:8px;
+    letter-spacing:.12em;
+    color:#8b867e;
+  }
+  .acc-title-wrap{
+    grid-column:1;
+    grid-row:2;
+    padding-right:0;
+  }
+  .acc-title{
+    font-size:27px;
+    line-height:.94;
+    letter-spacing:-.052em;
+    max-width:285px;
+  }
+  .project-accordion.is-open .acc-title{
+    font-size:24px;
+    line-height:.96;
+  }
+  .acc-descriptor{
+    display:block;
+    margin-top:10px;
+    max-width:255px;
+    font-size:7.5px;
+    line-height:1.42;
+    letter-spacing:.08em;
+  }
+  .acc-meta{display:none}
+
+  .acc-icon-wrap{
+    grid-column:2;
+    grid-row:1 / 3;
+    align-self:center;
+    justify-self:end;
+    min-width:72px;
+    gap:6px;
+  }
+  .acc-icon{
+    grid-column:auto;
+    grid-row:auto;
+    align-self:auto;
+    justify-self:auto;
+    width:30px;
+    height:30px;
+  }
+  .acc-icon svg{width:26px;height:26px}
+  .disclosure-label{
+    display:block;
+    font-size:6.25px;
+    letter-spacing:.08em;
+  }
+
+  /* Static cue on the first unopened row: a tiny accent rule, not motion. */
+  .project-accordion:first-child:not(.is-open) .disclosure-label::after{
+    content:"";
+    display:block;
+    width:18px;
+    height:1px;
+    margin:6px auto 0;
+    background:var(--accent);
+    opacity:.72;
+  }
+
+  .project-accordion{border-bottom-color:#bbb7ae}
+  .accordion-trigger::after{height:1px}
+  .project-accordion.is-open .accordion-trigger::after{width:100%}
+
+  /* Open project content uses the phone width more confidently. */
+  .acc-body{
+    grid-template-columns:1fr;
+    gap:22px;
+    padding:0 0 42px;
+  }
+  .acc-media,.acc-copy{grid-column:1}
+  .acc-media{
+    width:calc(100% + 30px);
+    margin-left:-15px;
+    max-height:184px;
+    border-top:0;
+  }
+  .acc-media img{height:184px}
+  .music-placeholder{
+    min-height:184px;
+    padding-left:30px;
+    padding-right:30px;
+  }
+  .inspect{right:12px;bottom:12px}
+
+  .acc-copy{padding-top:1px}
+  .overline{
+    margin-bottom:13px;
+    font-size:7.5px;
+  }
+  .acc-copy h3{
+    max-width:340px;
+    margin-bottom:16px;
+    font-size:25px;
+    line-height:1.01;
+  }
+  .acc-copy p{
+    max-width:330px;
+    font-size:13px;
+    line-height:1.58;
+  }
+  .acc-proof{margin-top:19px;gap:9px 14px}
+  .case-link{margin-top:22px}
+
+  /* Continue the same numbered/editorial language below the portfolio. */
+  .about{
+    padding:42px 0 54px;
+    border-top:1px solid var(--ink);
+  }
+  .about h2{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin:0 0 23px;
+    font-size:8px;
+  }
+  .about h2::before{
+    content:"05";
+    color:var(--accent);
+  }
+  .about h2::after{
+    content:"";
+    height:1px;
+    flex:1;
+    background:var(--line);
+  }
+  .about-copy p{
+    max-width:345px;
+    font-size:30px;
+    line-height:1.01;
+    letter-spacing:-.052em;
+  }
+  .about-copy .small{
+    margin-left:14px;
+    max-width:322px;
+    font-size:12.5px;
+    line-height:1.62;
+  }
+
+  .contact{padding:31px 0 39px}
+  .contact-title{
+    font-size:36px;
+    line-height:.98;
+  }
+  .contact-title::before{
+    content:"06 / CONTACT";
+    display:block;
+    margin-bottom:18px;
+    font-family:"Courier New",Courier,monospace;
+    font-size:8px;
+    line-height:1;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--accent);
+  }
+  .contact-links{margin-top:20px;gap:21px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important}
+}
+</style>
 </head>
 <body>
-  <main>
-    <header class="site-header">
-      <a class="name" href="#top">Shaun Pozywio</a>
-      <nav><a href="#work">Work</a><a href="#about">About</a><a href="#contact">Contact</a></nav>
-    </header>
+<header>
+  <div class="shell nav">
+    <a class="wordmark" href="#">Shaun Pozywio</a>
+    <nav class="navlinks">
+      <a href="#work">Work</a>
+      <a href="#about">About</a>
+      <a href="mailto:shaun@anubismusicgroup.com">Email</a>
+    </nav>
+  </div>
+</header>
 
-    <section class="intro" id="top">
-      <p class="eyebrow">Creative work · client delivery · technical systems</p>
-      <h1>I make things, solve problems, and usually end up learning whatever the work requires.</h1>
-      <p class="lede">My background started in songwriting, recording, and music production, then expanded into running projects, managing clients, building workflows, troubleshooting technical systems, and experimenting with automation and AI.</p>
-    </section>
-
-    <section id="work">
-      <div class="section-heading"><h2>Things I’ve done</h2><p>A short record of work across music, operations, systems, and technical experiments.</p></div>
-      <div class="project-list">
-        <article class="project"><div class="project-meta">01 · Anubis Music Group</div><h3>Built and ran a client-based creative business</h3><p>Managed discovery, scope, contracts, scheduling, budgets, client communication, collaborators, revisions, delivery, and the creative work itself across multiple concurrent projects.</p><p class="detail">Work included songwriting, production, mixing, vocal production, remote sessions, project planning, and long-term client relationships.</p></article>
-        <article class="project"><div class="project-meta">02 · Music + records</div><h3>Worked across songwriting, vocals, production, and records</h3><p>Contributed to hundreds of songs with independent artists and professional collaborators, including work connected to major-label releases and millions of streams and views.</p><p class="detail">The work spans writing, vocal ideas, arrangement, production, engineering, and helping artists turn incomplete ideas into finished records.</p></article>
-        <article class="project"><div class="project-meta">03 · Remote recording systems</div><h3>Built workflows for making remote sessions actually work</h3><p>Designed and troubleshot remote recording setups, routing, session workflows, client instructions, checklists, and technical processes so artists could record reliably outside a traditional studio.</p></article>
-        <article class="project"><div class="project-meta">04 · CRM + automation</div><h3>Built the systems around the creative work</h3><p>Configured CRM pipelines, scheduling, automated SMS and email follow-up, forms, tags, webhooks, and integrations using tools like GoHighLevel, Zapier, Make, Notion, and Airtable.</p></article>
-        <article class="project"><div class="project-meta">05 · AI + local systems</div><h3>Experimented with local AI, RAG, and autonomous workflows</h3><p>Built and tested local-model workflows using tools such as Ollama, Flowise, LangChain, Python, and Node, including a local multi-agent venture-validation system for researching and testing ideas.</p></article>
-        <article class="project"><div class="project-meta">06 · This site</div><h3>Kept the portfolio deliberately simple</h3><p>Static HTML and CSS, no CMS, no conversion funnel, no complicated framework. The goal is just to provide a clear place to see the range of work without forcing it into one job title.</p></article>
+<main>
+  <section class="shell hero">
+    <div class="hero-index">Portfolio / 2026—27</div>
+    <div class="hero-main">
+      <div class="mobile-hero-meta" aria-hidden="true">
+        <span>Shaun Pozywio</span>
+        <span>Portfolio / 2026—27</span>
       </div>
-    </section>
+      <h1>
+        <span class="line">I make music,</span>
+        <span class="line">build systems,</span>
+        <span class="line quiet">and learn whatever</span>
+        <span class="line quiet">the problem requires.</span>
+      </h1>
+      <p>Songwriting, production, projects, technical problems, and the things between them.</p>
+    </div>
+    <div class="hero-side">
+      <strong>Shaun Pozywio</strong>
+      Creative work<br>
+      systems & operations<br>
+      technical problem solving
+    </div>
+    <div class="hero-links">
+      <a class="text-link" href="#work">Selected work ↓</a>
+      <a class="text-link" href="https://www.linkedin.com/in/shaun-pozywio-75785551" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
 
-    <section id="about" class="about"><div class="section-heading"><h2>About</h2></div><p>I’m a songwriter, vocalist, producer, project lead, and technically curious generalist. Most of my work has happened at the intersection of creative judgment, client communication, execution, and problem solving.</p><p>I’m especially useful when the goal is clear but the path is not: figuring out what needs to happen, learning what I need to learn, coordinating the right people and tools, and getting the thing across the line.</p></section>
+  <section class="work-band" id="work">
+    <div class="shell work-intro">
+      <div class="work-kicker">Selected work</div>
+      <div class="work-range">01—04</div>
+    </div>
+  </section>
 
-    <section id="contact" class="contact"><div class="section-heading"><h2>Contact</h2></div><p>Replace these links with your real profiles before publishing.</p><div class="links"><a href="#">Email</a><a href="#">LinkedIn</a><a href="#">Resume</a><a href="#">GitHub</a></div></section>
-  </main>
+  <section class="shell accordion-work">
+
+    <article class="project-accordion is-open">
+      <button class="accordion-trigger" type="button" aria-expanded="true" aria-controls="panel-1">
+        <span class="acc-num">01</span>
+        <span class="acc-title-wrap">
+          <span class="acc-title">Creative Project Operations</span>
+          <span class="acc-descriptor"><span>Creative systems · project delivery</span></span>
+        </span>
+        <span class="acc-meta"><span class="count">3 artifacts</span></span>
+        <span class="acc-icon-wrap">
+          <span class="acc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5.4 13.5c.8 3.1 4.2 4.9 7.3 3.9 2.8-.9 4.4-3.9 3.5-6.7-.8-2.3-3.3-3.7-5.7-3-1.9.6-3.1 2.5-2.6 4.3.4 1.5 1.9 2.4 3.4 2.1 1.1-.2 2-1 2.4-2"/></svg>
+          </span>
+          <span class="disclosure-label" aria-hidden="true">
+            <span class="state-open">Open project</span>
+            <span class="state-close">Close</span>
+          </span>
+        </span>
+      </button>
+      <div class="acc-panel" id="panel-1">
+        <div class="acc-panel-clip">
+          <div class="acc-body">
+            <div class="acc-media" data-lightbox="assets/creative-ops.png">
+              <img src="assets/creative-ops.png" alt="Creative project operations board">
+              <span class="inspect">Click to inspect</span>
+            </div>
+            <div class="acc-copy">
+              <div class="overline">Working system</div>
+              <h3>Keeping complex creative work moving without stripping away the creative context.</h3>
+              <p>Song status, priorities, notes, tasks, revisions, and delivery lived in the same system so the project-management layer stayed connected to the actual work.</p>
+              <div class="acc-proof"><span>song-level boards</span><span>embedded task views</span><span>multi-project tracking</span></div>
+              <a class="case-link" href="projects/creative-operations.html">View case study →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-accordion">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="panel-2">
+        <span class="acc-num">02</span>
+        <span class="acc-title-wrap">
+          <span class="acc-title">Client Journey & Automation</span>
+          <span class="acc-descriptor"><span>CRM · qualification · automation</span></span>
+        </span>
+        <span class="acc-meta"><span class="count">4 artifacts</span></span>
+        <span class="acc-icon-wrap">
+          <span class="acc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5.4 13.5c.8 3.1 4.2 4.9 7.3 3.9 2.8-.9 4.4-3.9 3.5-6.7-.8-2.3-3.3-3.7-5.7-3-1.9.6-3.1 2.5-2.6 4.3.4 1.5 1.9 2.4 3.4 2.1 1.1-.2 2-1 2.4-2"/></svg>
+          </span>
+          <span class="disclosure-label" aria-hidden="true">
+            <span class="state-open">Open project</span>
+            <span class="state-close">Close</span>
+          </span>
+        </span>
+      </button>
+      <div class="acc-panel" id="panel-2">
+        <div class="acc-panel-clip">
+          <div class="acc-body">
+            <div class="acc-media" data-lightbox="assets/client-systems.png">
+              <img src="assets/client-systems.png" alt="Client funnel analytics">
+              <span class="inspect">Click to inspect</span>
+            </div>
+            <div class="acc-copy">
+              <div class="overline">Client system</div>
+              <h3>Designing qualification and follow-up around a high-touch creative service.</h3>
+              <p>The system connected application flow, scheduling, nurture, routing, and automation so time was spent on the right projects rather than manually chasing every lead.</p>
+              <div class="acc-proof"><span>3,259 visitors</span><span>447 application starts</span><span>89 calls scheduled</span></div>
+              <a class="case-link" href="projects/client-journey.html">View case study →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-accordion">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="panel-3">
+        <span class="acc-num">03</span>
+        <span class="acc-title-wrap">
+          <span class="acc-title">Remote Recording & Enablement</span>
+          <span class="acc-descriptor"><span>Remote audio · documentation · support</span></span>
+        </span>
+        <span class="acc-meta"><span class="count">3 artifacts</span></span>
+        <span class="acc-icon-wrap">
+          <span class="acc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5.4 13.5c.8 3.1 4.2 4.9 7.3 3.9 2.8-.9 4.4-3.9 3.5-6.7-.8-2.3-3.3-3.7-5.7-3-1.9.6-3.1 2.5-2.6 4.3.4 1.5 1.9 2.4 3.4 2.1 1.1-.2 2-1 2.4-2"/></svg>
+          </span>
+          <span class="disclosure-label" aria-hidden="true">
+            <span class="state-open">Open project</span>
+            <span class="state-close">Close</span>
+          </span>
+        </span>
+      </button>
+      <div class="acc-panel" id="panel-3">
+        <div class="acc-panel-clip">
+          <div class="acc-body">
+            <div class="acc-media" data-lightbox="assets/remote-recording.png">
+              <img src="assets/remote-recording.png" alt="Remote recording session setup">
+              <span class="inspect">Click to inspect</span>
+            </div>
+            <div class="acc-copy">
+              <div class="overline">Remote implementation</div>
+              <h3>Making distributed recording usable for artists who were not audio engineers.</h3>
+              <p>Technical setup was only half the problem. The work also required documentation, client guidance, troubleshooting, and translating production knowledge into something someone could actually follow remotely.</p>
+              <div class="acc-proof"><span>remote session setup</span><span>client guides</span><span>troubleshooting workflows</span></div>
+              <a class="case-link" href="projects/remote-recording.html">View case study →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <article class="project-accordion">
+      <button class="accordion-trigger" type="button" aria-expanded="false" aria-controls="panel-4">
+        <span class="acc-num">04</span>
+        <span class="acc-title-wrap">
+          <span class="acc-title">Selected Music</span>
+          <span class="acc-descriptor"><span>Writing · production · vocals</span></span>
+        </span>
+        <span class="acc-meta"><span class="count">6 selections</span></span>
+        <span class="acc-icon-wrap">
+          <span class="acc-icon" aria-hidden="true">
+            <svg viewBox="0 0 24 24"><path d="M5.4 13.5c.8 3.1 4.2 4.9 7.3 3.9 2.8-.9 4.4-3.9 3.5-6.7-.8-2.3-3.3-3.7-5.7-3-1.9.6-3.1 2.5-2.6 4.3.4 1.5 1.9 2.4 3.4 2.1 1.1-.2 2-1 2.4-2"/></svg>
+          </span>
+          <span class="disclosure-label" aria-hidden="true">
+            <span class="state-open">Open project</span>
+            <span class="state-close">Close</span>
+          </span>
+        </span>
+      </button>
+      <div class="acc-panel" id="panel-4">
+        <div class="acc-panel-clip">
+          <div class="acc-body">
+            <div class="acc-media music-placeholder">
+              <div><span>Selected Music</span><small>Released + unreleased · writing · production · vocals</small></div>
+            </div>
+            <div class="acc-copy">
+              <div class="overline">Finished work</div>
+              <h3>The records all of those systems existed to support.</h3>
+              <p>A selective mix of client work, artist development, major-label credits, sync history, and personal records — including unreleased work worth showing.</p>
+              <div class="acc-proof"><span>songwriting</span><span>production</span><span>vocals</span><span>mixing</span></div>
+              <a class="case-link" href="music.html">View selected music →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+  </section>
+
+  <section class="shell about" id="about">
+    <h2>About</h2>
+    <div class="about-copy">
+      <p>Most of my work sits somewhere between creative judgment, people, systems, and getting something across the line.</p>
+      <p class="small">I started in songwriting and recording, built a production business around that work, and gradually became the person handling the projects, client experience, technical problems, workflows, automations, and whatever else was blocking the result.</p>
+    </div>
+  </section>
+
+  <section class="shell contact">
+    <div class="contact-title">Want to talk?</div>
+    <div class="contact-links">
+      <a href="mailto:shaun@anubismusicgroup.com">Email</a>
+      <a href="https://www.linkedin.com/in/shaun-pozywio-75785551" target="_blank" rel="noopener">LinkedIn ↗</a>
+    </div>
+  </section>
+</main>
+
+<footer><div class="shell">Shaun Pozywio · 2026—27</div></footer>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox-close" type="button" aria-label="Close image">×</button>
+  <img id="lightbox-image" alt="">
+</div>
+
+<script>
+(function(){
+  function initPortfolio(){
+    const items = [...document.querySelectorAll('.project-accordion')];
+    const header = document.querySelector('header');
+    const mobileMQ = window.matchMedia('(max-width: 520px)');
+    const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    let motionFrame = null;
+    let transitionLock = false;
+
+    if (!items.length) return;
+
+    function setOpen(item, open){
+      item.classList.toggle('is-open', open);
+      const trigger = item.querySelector('.accordion-trigger');
+      if (trigger) trigger.setAttribute('aria-expanded', String(open));
+    }
+
+    function closeOthers(item){
+      items.forEach(other => {
+        if (other !== item && other.classList.contains('is-open')) setOpen(other, false);
+      });
+    }
+
+    function openOnly(item){
+      items.forEach(other => setOpen(other, other === item));
+    }
+
+    function nextFrame(){
+      return new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve)));
+    }
+
+    function smoothScrollAbsolute(targetY, duration = 500){
+      if (motionFrame) cancelAnimationFrame(motionFrame);
+
+      const startY = window.scrollY;
+      const distance = targetY - startY;
+
+      if (reduceMotion || Math.abs(distance) < 5){
+        window.scrollTo(0, targetY);
+        return Promise.resolve();
+      }
+
+      const start = performance.now();
+      const ease = t => t * t * t * (t * (t * 6 - 15) + 10);
+
+      return new Promise(resolve => {
+        function step(now){
+          const t = Math.min(1, (now - start) / duration);
+          window.scrollTo(0, startY + distance * ease(t));
+
+          if (t < 1){
+            motionFrame = requestAnimationFrame(step);
+          } else {
+            motionFrame = null;
+            resolve();
+          }
+        }
+        motionFrame = requestAnimationFrame(step);
+      });
+    }
+
+    async function positionMobileTrigger(trigger){
+      await nextFrame();
+
+      const headerH = header ? header.offsetHeight : 0;
+      const safeTop = headerH + 14;
+      const desiredTop = Math.max(headerH + 22, window.innerHeight * 0.18);
+      const comfortableBottom = window.innerHeight * 0.52;
+      let rect = trigger.getBoundingClientRect();
+
+      /* Preserve the user's scroll when the clicked row is already framed well. */
+      if (rect.top >= safeTop && rect.bottom <= comfortableBottom) return;
+
+      const targetY = Math.max(0, window.scrollY + rect.top - desiredTop);
+      await smoothScrollAbsolute(targetY, 500);
+
+      /* Tiny geometry correction after the sticky header/layout has fully settled. */
+      rect = trigger.getBoundingClientRect();
+      const correction = rect.top - desiredTop;
+      if (Math.abs(correction) > 2) window.scrollBy(0, correction);
+    }
+
+    items.forEach(item => {
+      const trigger = item.querySelector('.accordion-trigger');
+      if (!trigger) return;
+
+      trigger.addEventListener('click', async () => {
+        if (transitionLock) return;
+
+        if (item.classList.contains('is-open')){
+          setOpen(item, false);
+          return;
+        }
+
+        transitionLock = true;
+
+        /* Critical ordering: collapse the previous project first, let the page
+           recalculate its geometry, position the clicked heading, then reveal it. */
+        closeOthers(item);
+        await nextFrame();
+
+        if (mobileMQ.matches){
+          await positionMobileTrigger(trigger);
+        }
+
+        openOnly(item);
+        transitionLock = false;
+      });
+    });
+
+    function applyInitialLayout(){
+      /* First project anchors the initial composition and demonstrates disclosure. */
+      openOnly(items[0]);
+    }
+
+    applyInitialLayout();
+
+    /* Only reset the accordion when the layout actually crosses the breakpoint. */
+    const onBreakpointChange = () => {
+      if (motionFrame) cancelAnimationFrame(motionFrame);
+      motionFrame = null;
+      transitionLock = false;
+      applyInitialLayout();
+    };
+    if (mobileMQ.addEventListener) mobileMQ.addEventListener('change', onBreakpointChange);
+    else if (mobileMQ.addListener) mobileMQ.addListener(onBreakpointChange);
+
+    /* Lightbox */
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImage = document.getElementById('lightbox-image');
+    const closeButton = document.querySelector('.lightbox-close');
+
+    if (lightbox && lightboxImage && closeButton) {
+      document.querySelectorAll('[data-lightbox]').forEach(media => {
+        media.addEventListener('click', () => {
+          lightboxImage.src = media.dataset.lightbox;
+          lightbox.classList.add('open');
+          lightbox.setAttribute('aria-hidden','false');
+          document.body.style.overflow = 'hidden';
+        });
+      });
+
+      function closeLightbox(){
+        lightbox.classList.remove('open');
+        lightbox.setAttribute('aria-hidden','true');
+        document.body.style.overflow = '';
+      }
+
+      closeButton.addEventListener('click', closeLightbox);
+      lightbox.addEventListener('click', e => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      document.addEventListener('keydown', e => {
+        if (e.key === 'Escape' && lightbox.classList.contains('open')) closeLightbox();
+      });
+    }
+  }
+
+  if (document.readyState === 'loading'){
+    document.addEventListener('DOMContentLoaded', initPortfolio, {once:true});
+  } else {
+    initPortfolio();
+  }
+})();
+</script>
 </body>
 </html>
